@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en" data-aeapidom="aem1.xyz" data-aeemldom="aem1.xyz" data-aeapipub="12d8548ff3f06de213189f56bed63c825c72f13b96873e4ba914aaf5e2df8a05" data-aesaltnm="85e5af41488c0f7b4cba2e0c86c5ad91" data-aesigpub="bdff30d8ffcf0e3a58d67a698c624e319157c55b89e2379309db2b224bed2deb">
+	<head>
+		<title>All-Ears Mail</title>
+		<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3C?xml version='1.0' encoding='UTF-8'?%3E%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23b3773b'%3E%3Cpolygon%20points='0,4%200,20%208,12'/%3E%3Cpolygon%20points='24,4%2024,20%2016,12'/%3E%3Cpolygon%20points='2,4%2012,14%2022,4'/%3E%3Cpolygon%20points='12,16%209,13%202,20%2022,20%2015,13'/%3E%3C/svg%3E">
+		<link rel="license" href="https://www.gnu.org/licenses/gpl-3.0.html" hreflang="en-US">
+		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/emp-code/aem-client@79560521ec5529449487419d2a939b3cd6428e64/modern/main.css" integrity="sha384-Q+Gp9FE6AN+9Kb3PcifSuRAibC3INNIL3FEr8eQwsI8c/i7tkhNdjIRU4kP7CGek" crossorigin="anonymous">
+		<meta name="color-scheme" content="dark">
+		<meta name="description" content="Private email service powered by All-Ears Mail">
+		<meta name="theme-color" content="#00000a">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	</head>
+	<body>
+		<div id="div_begin">
+			<div>
+				<header>
+					<h1>All-Ears Mail</h1>
+					<p id="greeting">Private email</p>
+				</header>
+
+				<main>
+					<noscript>Javascript required</noscript>
+					<input id="txt_skey" type="password" maxlength="0" pattern="[0-9a-f]{64}" autocomplete="current-password" required autofocus>
+					<button id="btn_enter" type="button"></button>
+				</main>
+
+				<footer>
+					<p>Powered by <a href="https://github.com/emp-code/aem-server" rel="noopener">All-Ears Mail</a></p>
+				</footer>
+			</div>
+		</div>
+
+		<div id="div_main">
+			<div id="main1" class="main">
+				<nav class="top">
+					<button type="button" autocomplete="off" id="btn_inbox" disabled="disabled"><svg viewbox="0 0 96 64"><use xlink:href="#svg_inbx"/></svg></button>
+					<button type="button" autocomplete="off" id="btn_snbox"><svg viewbox="0 0 96 64"><use xlink:href="#svg_snbx"/></svg></button>
+					<button type="button" autocomplete="off" id="btn_write"><svg viewbox="0 0 96 64"><use xlink:href="#svg_writ"/></svg></button>
+					<button type="button" autocomplete="off" id="btn_notes"><svg viewbox="0 0 96 64"><use xlink:href="#svg_note"/></svg></button>
+					<button type="button" autocomplete="off" id="btn_prefs"><svg viewbox="0 0 96 64"><use xlink:href="#svg_sett"/></svg></button>
+				</nav>
+
+				<div class="mid">
+					<div id="div_inbox">
+						<table id="tbl_inbox"></table>
+					</div>
+
+					<div id="div_drbox" hidden>
+						<table id="tbl_drbox"></table>
+					</div>
+
+					<div id="div_write" hidden>
+						<div id="div_write_1">
+							<p class="flex0"><select id="write_from" required></select></p>
+							<p class="flex0"><input id="write_recv" type="text" required placeholder="Receiver" pattern="[0-9a-z]{1,16}|\S+@\S+" list="contact_emails" autocapitalize="off" spellcheck="false" inputmode="email"></p>
+							<p class="flex0"><input id="write_subj" type="text" required placeholder="Subject" autocapitalize="sentences" spellcheck="true"></p>
+							<p class="flex1"><textarea id="write_body" required placeholder="Message" autocapitalize="sentences" spellcheck="true"></textarea></p>
+
+							<datalist id="contact_emails"></datalist>
+						</div>
+
+						<div id="div_write_2" hidden>
+							<p id="write2_pkey"><input type="text" pattern="[0-9A-Za-z+/]{43}" size="43" maxlength="43" autocomplete="off" placeholder="Public key (enables end-to-end encryption)"></p>
+							<p id="write2_send"><button><span id="write2_btntxt">Send to</span> <span id="write2_recv"></span></button></p>
+							<hr>
+							<p id="write2_from"></p>
+							<p>
+								<span id="write2_subj"></span>
+								<br>
+								In-Reply-To: &lt;<span id="write2_rply"></span>&gt;
+							</p>
+							<p id="write2_body"></p>
+						</div>
+					</div>
+
+					<div id="div_notes" hidden>
+						<div>
+							<table>
+								<thead>
+									<tr>
+										<th>Email</th>
+										<th>Name</th>
+										<th>Notes</th>
+										<th>Del</th>
+									</tr>
+								</thead>
+								<tbody id="tbl_ctact">
+								</tbody>
+							</table>
+
+							<p class="center">
+								<button type="button" autocomplete="off" id="btn_newcontact">New</button>
+								<button type="button" autocomplete="off" id="btn_savecontacts">Save</button>
+							</p>
+						</div>
+
+						<div id="div_notepad" hidden>
+							<p class="flex1"><textarea id="txt_notepad" placeholder="Notepad"></textarea></p>
+							<p class="grid0">
+								<button type="button" id="btn_notepad_restore">Restore</button>
+								<button type="button" id="btn_notepad_savepad">Save</button>
+								<button type="button" id="btn_notepad_saveupl">Save as&hellip;</button>
+								<button type="button" id="btn_upload">Upload</button>
+							</p>
+						</div>
+
+						<div hidden>
+							<table>
+								<thead>
+									<tr>
+										<th>Date</th>
+										<th>Name</th>
+										<th>KiB</th>
+										<th>Del</th>
+									</tr>
+								</thead>
+								<tbody id="tbd_uploads">
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+					<div id="div_tools" hidden>
+						<table id="table_addrs">
+							<thead>
+								<tr>
+									<th>Address</th>
+									<th><abbr title="Accept email">Ext</abbr></th>
+									<th><abbr title="Accept internal mail">Int</abbr></th>
+									<th><abbr title="Delete">Del</abbr></th>
+								</tr>
+							</thead>
+							<tbody id="tbl_addrs">
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="4"></td>
+								</tr>
+								<tr>
+									<td><input type="text" id="txt_address_create_normal" size="16" maxlength="15" pattern="[0-9a-z]{1,15}" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="new"></td>
+									<td colspan="2"><button type="button" autocomplete="off" id="btn_address_create_normal">Register</button></td>
+									<td id="limit_normal"></td>
+								</tr>
+								<tr>
+									<td class="half">Shield</td>
+									<td colspan="2"><button type="button" autocomplete="off" id="btn_address_create_shield">Generate</button></td>
+									<td id="limit_shield"></td>
+								</tr>
+								<tr>
+									<td class="half">Total</td>
+									<td colspan="2"><button type="button" autocomplete="off" id="btn_address_update">Update</button></td>
+									<td id="limit_total"></td>
+								</tr>
+							</tfoot>
+						</table>
+
+						<div hidden id="div_acc">
+							<table>
+								<thead>
+									<tr>
+										<th><abbr title="Level">Lvl</abbr></th>
+										<th><abbr title="Mebibytes">MiB</abbr></th>
+										<th><abbr title="Normal addresses">Nrm</abbr></th>
+										<th><abbr title="Shield addresses">Shd</abbr></th>
+									</tr>
+								</thead>
+								<tbody id="tbl_limits">
+									<tr>
+										<td class="half">0</td>
+										<td><input type="number" min="1" max="256" autocomplete="off" disabled required></td>
+										<td><input type="number" min="0" max="31" autocomplete="off" disabled required></td>
+										<td><input type="number" min="0" max="31" autocomplete="off" disabled required></td>
+									</tr>
+									<tr>
+										<td class="half">1</td>
+										<td><input type="number" min="1" max="256" autocomplete="off" disabled required></td>
+										<td><input type="number" min="0" max="31" autocomplete="off" disabled required></td>
+										<td><input type="number" min="0" max="31" autocomplete="off" disabled required></td>
+									</tr>
+									<tr>
+										<td class="half">2</td>
+										<td><input type="number" min="1" max="256" autocomplete="off" disabled required></td>
+										<td><input type="number" min="0" max="31" autocomplete="off" disabled required></td>
+										<td><input type="number" min="0" max="31" autocomplete="off" disabled required></td>
+									</tr>
+									<tr>
+										<td class="half">3</td>
+										<td><input type="number" min="1" max="256" autocomplete="off" disabled required></td>
+										<td><input type="number" min="0" max="31" autocomplete="off" disabled required></td>
+										<td><input type="number" min="0" max="31" autocomplete="off" disabled required></td>
+									</tr>
+								</tbody>
+							</table>
+
+							<hr>
+
+							<p class="half">Check to enable dangerous operations on the next page</p>
+							<p><input id="chk_lowme" type="checkbox"> <span class="half">I want to <b>lower my level</b></span></p>
+							<p><input id="chk_delme" type="checkbox"> <span class="half">I want to <b>delete my account</b></span></p>
+
+							<hr>
+
+							<p>
+								<input id="txt_pg" type="text" autocomplete="off" placeholder="Personal greeting">
+								<button type="button" autocomplete="off" id="btn_pg">Set</button>
+							</p>
+
+							<hr>
+
+							<p>
+								<input id="txt_reg" type="text" size="64" maxlength="64" pattern="[0-9a-f]{64}" autocomplete="off" required>
+								<button type="button" autocomplete="off" id="btn_reg">Register</button>
+							</p>
+						</div>
+
+						<table hidden id="tbl_accs">
+							<thead>
+								<tr>
+									<th>Public key</th>
+									<th><abbr title="Mebibytes">MiB</abbr></th>
+									<th><abbr title="Normal addresses">Nrm</abbr></th>
+									<th><abbr title="Shield addresses">Shd</abbr></th>
+									<th><abbr title="Level">Lvl</abbr></th>
+									<th colspan="2">Adjust level</th>
+									<th>Delete</th>
+								</tr>
+							</thead>
+							<tbody  id="tbd_accs">
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<nav class="bot">
+					<button type="button" autocomplete="off" id="btn_dele" disabled="disabled"><svg viewbox="0 0 96 64"><use xlink:href="#svg_dele"/></svg></button>
+					<button type="button" autocomplete="off" id="btn_left" disabled="disabled"><svg viewbox="0 0 96 64"><use xlink:href="#svg_arrL"/></svg></button>
+					<button type="button" autocomplete="off" id="btn_cent" disabled="disabled"><svg viewbox="0 0 96 64"><use xlink:href="#svg_cent"/></svg></button>
+					<button type="button" autocomplete="off" id="btn_rght" disabled="disabled"><svg viewbox="0 0 96 64"><use xlink:href="#svg_arrR"/></svg></button>
+					<button type="button" autocomplete="off" id="btn_updt"><svg viewbox="0 0 96 64"><use xlink:href="#svg_updt"/></svg></button>
+				</nav>
+			</div>
+
+			<div id="main2" class="main">
+				<nav class="top">
+					<button type="button" autocomplete="off" id="btn_top21" disabled="disabled"><svg viewbox="0 0 96 64"><use xlink:href="#svg_inbx"/></svg></button>
+					<button type="button" autocomplete="off" id="btn_top22" disabled="disabled"><svg viewbox="0 0 96 64"><use xlink:href="#svg_snbx"/></svg></button>
+					<button type="button" autocomplete="off" id="btn_reply" disabled="disabled"><svg viewbox="0 0 96 64"><use xlink:href="#svg_writ"/></svg></button>
+					<button type="button" autocomplete="off" id="btn_top24" disabled="disabled"><svg viewbox="0 0 96 64"><use xlink:href="#svg_note"/></svg></button>
+					<button type="button" autocomplete="off" id="btn_top25" disabled="disabled"><svg viewbox="0 0 96 64"><use xlink:href="#svg_sett"/></svg></button>
+				</nav>
+				<div id="midright" class="mid">
+					<table hidden>
+						<tr>
+							<td id="readmsg_date"><span>&#128336;</span> <time></time></td>
+							<td id="readmsg_ip"><span id="readmsg_country" title="Unknown">&#10068;</span> <span></span></td>
+						</tr>
+						<tr>
+							<td id="readmsg_flags">&#128203; <span></span></td>
+							<td id="readmsg_rdns">&#127760; <span></span></td>
+						</tr>
+						<tr>
+							<td id="readmsg_dkim">&#9997; <span></span></td>
+							<td id="readmsg_greet">&#128188; <span></span></td>
+						</tr>
+						<tr>
+							<td id="readmsg_tls">&#128274; <span></span></td>
+							<td id="readmsg_cert">&#128220; <span></span></td>
+						</tr>
+						<tr>
+							<td id="readmsg_envfrom"></td>
+							<td id="readmsg_envto"></td>
+						</tr>
+						<tr>
+							<td id="readmsg_hdrfrom"></td>
+							<td id="readmsg_hdrto"></td>
+						</tr>
+					</table>
+
+					<h1></h1>
+					<pre></pre>
+				</div>
+				<nav class="bot">
+					<button type="button" autocomplete="off" id="btn_mdele" disabled="disabled"><svg viewbox="0 0 96 64"><use xlink:href="#svg_dele"/></svg></button>
+					<button type="button" autocomplete="off" id="btn_mprev" disabled="disabled"><svg viewbox="0 0 96 64"><use xlink:href="#svg_arrL"/></svg></button>
+					<button type="button" autocomplete="off" id="btn_bot23" disabled="disabled"><svg viewbox="0 0 96 64"><use xlink:href="#svg_cent"/></svg></button>
+					<button type="button" autocomplete="off" id="btn_mnext" disabled="disabled"><svg viewbox="0 0 96 64"><use xlink:href="#svg_arrR"/></svg></button>
+					<button type="button" autocomplete="off" id="btn_bot25" disabled="disabled"><svg viewbox="0 0 96 64"><use xlink:href="#svg_updt"/></svg></button>
+				</nav>
+			</div>
+		</div>
+
+		<svg hidden>
+			<symbol id="svg_inbx" stroke-width="0" fill="#fff">
+				<polygon points="0,0 0,64 32,32"/>
+				<polygon points="96,0 96,64 64,32"/>
+				<polygon points="8,0 48,40 88,0"/>
+				<polygon points="48,48 36,36 8,64 88,64 60,36"/>
+			</symbol>
+
+			<symbol id="svg_snbx" stroke-width="5" stroke="#fff">
+				<polygon points="0,0 0,64 32,32"/>
+				<polygon points="96,0 96,64 64,32"/>
+				<polygon points="8,0 48,40 88,0"/>
+				<polygon points="48,48 36,36 8,64 88,64 60,36"/>
+			</symbol>
+
+			<symbol id="svg_arrL" stroke-width="32" fill="#fff">
+				<polygon points="96,16 48,16 48,0 0,32 48,64 48,48 96,48"/>
+			</symbol>
+
+			<symbol id="svg_arrR" stroke-width="32" fill="#fff">
+				<polygon points="0,16 48,16 48,0 96,32 48,64 48,48 0,48"/>
+			</symbol>
+
+			<symbol id="svg_cent" stroke-width="16" stroke="#fff">
+				<rect x="4" y="4" rx="24" ry="16" width="88" height="56" stroke-width="8"/>
+			</symbol>
+
+			<symbol id="svg_writ" stroke="#fff">
+				<line x1="0" x2="72" y1="0" y2="48" stroke-width="16"/>
+				<line x1="72" x2="96" y1="48" y2="64" stroke-width="8"/>
+			</symbol>
+
+			<symbol id="svg_note" stroke="#fff">
+				<rect x="3" y="3" width="40" height="58" stroke-width="6"/>
+				<rect x="52" y="3" width="40" height="58" stroke-width="6"/>
+				<line x1="12" x2="34" y1="16" y2="16" stroke-width="5"/>
+				<line x1="12" x2="34" y1="32" y2="32" stroke-width="5"/>
+				<line x1="12" x2="34" y1="48" y2="48" stroke-width="5"/>
+				<polyline points="63,48 69,30 75,39 81,15" stroke-width="5"/>
+			</symbol>
+
+			<symbol id="svg_sett" stroke="#fff">
+				<rect x="0" y="16" width="72" height="32" fill="#fff" stroke-width="0"/>
+				<circle cx="64" cy="32" r="32" fill="#fff" stroke-width="0"/>
+				<rect x="64" y="20" width="32" height="24" fill="#000011" stroke-width="0"/>
+			</symbol>
+
+			<symbol id="svg_dele" stroke="#fff" stroke-width="6">
+				<line x1="0" x2="96" y1="0" y2="64"/>
+				<line x1="0" x2="96" y1="64" y2="0"/>
+			</symbol>
+
+			<symbol id="svg_updt" stroke="#fff" stroke-width="8">
+				<polyline points="0,4 80,4 80,64"/>
+				<line x1="80" x2="64" y1="64" y2="40"/>
+				<line x1="80" x2="96" y1="64" y2="40"/>
+				<polyline points="60,60 16,60 16,28"/>
+				<line x1="16" x2="32" y1="28" y2="40"/>
+				<line x1="16" x2="0" y1="28" y2="40"/>
+			</symbol>
+		</svg>
+
+		<script src="https://cdn.jsdelivr.net/gh/google/brotli@1.0.7/js/decode.min.js" integrity="sha384-D02d+8Zt5n4/7mnD+GctnXcW7NBcKHdgDsl3msmWdkOG3094pdP0ceN/4c/zChml" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/gh/jedisct1/libsodium.js@0.7.8/dist/browsers/sodium.js" integrity="sha384-UQ7f7udPxA0m0PWF3VEnZYGh4Tga11PPkrMLwO/A544LXaznLhy0l3yo+bU1kJjF" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/gh/emp-code/aem-client@79560521ec5529449487419d2a939b3cd6428e64/all-ears.js" integrity="sha384-BoR4Uu31CQS4OtHbugh+OwHES1EvnBmiSGYiGJwh3AnUl/epaKNXt6t2QjDW4AHl" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/gh/emp-code/aem-client@79560521ec5529449487419d2a939b3cd6428e64/modern/main.js" integrity="sha384-KHYYEc2gRYUE/oqXTKgiXfMBiqsLLvYzuf67obPzP6dhdSbwrt0OCwxTjdmUx/zJ" crossorigin="anonymous"></script>
+	</body>
+</html>
