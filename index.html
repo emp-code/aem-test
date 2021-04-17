@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en">
 	<head>
-		<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3C?xml%20version='1.0'%20encoding='UTF-8'?%3E%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='%23b3773b'%3E%3Cpolygon%20points='0,4%200,20%208,12'/%3E%3Cpolygon%20points='24,4%2024,20%2016,12'/%3E%3Cpolygon%20points='2,4%2012,14%2022,4'/%3E%3Cpolygon%20points='12,16%209,13%202,20%2022,20%2015,13'/%3E%3C/svg%3E">
+		<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='%23b3773b'%3E%3Cpolygon%20points='0,4%200,20%208,12'/%3E%3Cpolygon%20points='24,4%2024,20%2016,12'/%3E%3Cpolygon%20points='2,4%2012,14%2022,4'/%3E%3Cpolygon%20points='12,16%209,13%202,20%2022,20%2015,13'/%3E%3C/svg%3E">
 		<link rel="license" href="https://www.gnu.org/licenses/gpl-3.0.html" hreflang="en-US">
-		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/emp-code/aem-client@701e006fb90909abb78d7cddd6ad9fedd5cb5290/modern/main.css" integrity="sha384-KoXqYTiiV7dFgz0Yv/NkKdFDr4vwGgrJwdYfYQhzWahbXOBx9AW7XhIh7JuCf3Xx" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/emp-code/aem-client@a93b0a98877a8c5ada254cbe3fcd34b0bf8177df/modern/main.css" integrity="sha384-crnNiJkrYrdSh7HuxsG75rDH0VYCD/ULoBaUZkWSFNcaQHMAdVYkZI1nGTtPGt1E" crossorigin="anonymous">
 
 		<meta name="aem.domain.api" content="all-ears.icu">
 		<meta name="aem.domain.eml" content="all-ears.icu">
@@ -17,19 +17,18 @@
 		<meta name="theme-color" content="#00000a">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<title>All-Ears Mail</title>
+		<title>AEM:ICU</title>
 	</head>
 
 	<body>
 		<div id="div_begin">
 			<div>
 				<header>
-					<h1>All-Ears Mail</h1>
-					<p id="greeting">Private email</p>
+					<h1>AEM:ICU</h1>
+					<p><span id="greeting">Private email</span><noscript> - Javascript required</noscript></p>
 				</header>
 
 				<main>
-					<noscript>Javascript required</noscript>
 					<input type="password" id="txt_skey" maxlength="0" pattern="[0-9a-f]{64}" autocomplete="current-password" required autofocus>
 					<button type="button" id="btn_enter"></button>
 				</main>
@@ -42,7 +41,7 @@
 
 		<div id="div_main" hidden>
 			<div id="main1" class="main">
-				<nav class="top">
+				<nav>
 					<button type="button" id="btn_inbox" autocomplete="off" disabled><svg viewbox="0 0 96 64"><use xlink:href="#svg_inbx"/></svg></button>
 					<button type="button" id="btn_snbox" autocomplete="off"><svg viewbox="0 0 96 64"><use xlink:href="#svg_snbx"/></svg></button>
 					<button type="button" id="btn_write" autocomplete="off"><svg viewbox="0 0 96 64"><use xlink:href="#svg_writ"/></svg></button>
@@ -51,6 +50,15 @@
 				</nav>
 
 				<div class="mid">
+					<dialog>
+						<div>
+							<div>
+								<h1></h1>
+								<p></p>
+							</div>
+						</div>
+					</dialog>
+
 					<div id="div_inbox">
 						<table id="tbl_inbox"></table>
 					</div>
@@ -75,7 +83,7 @@
 							<hr>
 							<p id="write2_from"></p>
 							<p>
-								<span id="write2_subj"></span>
+								<h1 id="write2_subj"></h1>
 								<br>
 								In-Reply-To: &lt;<span id="write2_rply"></span>&gt;
 							</p>
@@ -105,7 +113,8 @@
 						</div>
 
 						<div id="div_notepad" hidden>
-							<p class="flex1"><textarea id="txt_notepad" placeholder="Notepad"></textarea></p>
+							<textarea id="txt_notepad" placeholder="Notepad"></textarea>
+							<meter value="0" min="0" max="1" optimum="0" low="0.2" high="0.8"></meter>
 							<p class="grid0">
 								<button type="button" id="btn_notepad_restore">Restore</button>
 								<button type="button" id="btn_notepad_savepad">Save</button>
@@ -115,17 +124,7 @@
 						</div>
 
 						<div hidden>
-							<table>
-								<thead>
-									<tr>
-										<th>Date</th>
-										<th>Name</th>
-										<th>KiB</th>
-										<th>Del</th>
-									</tr>
-								</thead>
-								<tbody id="tbd_uploads">
-								</tbody>
+							<table id="tbl_files">
 							</table>
 						</div>
 					</div>
@@ -164,7 +163,7 @@
 							</tfoot>
 						</table>
 
-						<div hidden id="div_acc">
+						<div id="div_acc" hidden>
 							<table>
 								<thead>
 									<tr>
@@ -221,9 +220,17 @@
 								<input type="text" id="txt_reg" size="64" maxlength="64" pattern="[0-9a-f]{64}" autocomplete="off" required>
 								<button type="button" id="btn_reg" autocomplete="off">Register</button>
 							</p>
+
+							<p>
+								<input type="text" id="txt_sender_hash" autocomplete="off" required size="64" maxlength="64" pattern="[0-9A-Za-z_-]{64}" placeholder="Message-ID">
+								<input type="text" id="txt_sender_date" autocomplete="off" required placeholder="Date">
+								<button type="button" id="btn_sender" autocomplete="off">Identify</button>
+								<br>
+								<input type="text" id="txt_sender_res" autocomplete="off" size="64" placeholder="Result" readonly>
+							</p>
 						</div>
 
-						<table hidden id="tbl_accs">
+						<table id="tbl_accs" hidden>
 							<thead>
 								<tr>
 									<th>Public key</th>
@@ -240,7 +247,7 @@
 						</table>
 					</div>
 				</div>
-				<nav class="bot">
+				<nav>
 					<button type="button" id="btn_dele" autocomplete="off" disabled><svg viewbox="0 0 96 64"><use xlink:href="#svg_dele"/></svg></button>
 					<button type="button" id="btn_left" autocomplete="off" disabled><svg viewbox="0 0 96 64"><use xlink:href="#svg_arrL"/></svg></button>
 					<button type="button" id="btn_cent" autocomplete="off" disabled><svg viewbox="0 0 96 64"><use xlink:href="#svg_cent"/></svg></button>
@@ -250,7 +257,7 @@
 			</div>
 
 			<div id="main2" class="main">
-				<nav class="top">
+				<nav>
 					<button type="button" id="btn_top21" autocomplete="off" disabled><svg viewbox="0 0 96 64"><use xlink:href="#svg_inbx"/></svg></button>
 					<button type="button" id="btn_top22" autocomplete="off" disabled><svg viewbox="0 0 96 64"><use xlink:href="#svg_snbx"/></svg></button>
 					<button type="button" id="btn_reply" autocomplete="off" disabled><svg viewbox="0 0 96 64"><use xlink:href="#svg_writ"/></svg></button>
@@ -272,7 +279,7 @@
 							<td id="readmsg_cert">&#128220; <span></span></td>
 						</tr>
 						<tr>
-							<td id="readmsg_flags">&#128203; <span></span></td>
+							<td id="readmsg_flags">&#128203;<span></span></td>
 							<td id="readmsg_dkim">&#9997; <span></span></td>
 						</tr>
 						<tr>
@@ -288,7 +295,7 @@
 					<h1></h1>
 					<pre></pre>
 				</article>
-				<nav class="bot">
+				<nav>
 					<button type="button" id="btn_mdele" autocomplete="off" disabled><svg viewbox="0 0 96 64"><use xlink:href="#svg_dele"/></svg></button>
 					<button type="button" id="btn_mprev" autocomplete="off" disabled><svg viewbox="0 0 96 64"><use xlink:href="#svg_arrL"/></svg></button>
 					<button type="button" id="btn_bot23" autocomplete="off" disabled><svg viewbox="0 0 96 64"><use xlink:href="#svg_cent"/></svg></button>
@@ -362,7 +369,7 @@
 
 		<script src="https://cdn.jsdelivr.net/gh/google/brotli@1.0.7/js/decode.min.js" integrity="sha384-D02d+8Zt5n4/7mnD+GctnXcW7NBcKHdgDsl3msmWdkOG3094pdP0ceN/4c/zChml" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/gh/jedisct1/libsodium.js@0.7.9/dist/browsers/sodium.js" integrity="sha384-8Y8Mt8Fo5a34Wpg1Zl9A2KvsGwfL5IcBFgRUP3jd6uEKEHNW4fhAPKXixPH7WUtA" crossorigin="anonymous"></script>
-		<script src="https://cdn.jsdelivr.net/gh/emp-code/aem-client@701e006fb90909abb78d7cddd6ad9fedd5cb5290/all-ears.js" integrity="sha384-B4oPpn7v/I29mztH6airumwfFdPXyd68Ren1gJmK28UZBUbmx5DsEkZ8W5b9KcqV" crossorigin="anonymous"></script>
-		<script src="https://cdn.jsdelivr.net/gh/emp-code/aem-client@701e006fb90909abb78d7cddd6ad9fedd5cb5290/modern/main.js" integrity="sha384-MIM/b0xRRns0A0W8eEzUt40OrBISNoAhlH4G6wF1UpRfCgLtXjCpRK/Hk6jlmeNC" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/gh/emp-code/aem-client@a93b0a98877a8c5ada254cbe3fcd34b0bf8177df/all-ears.js" integrity="sha384-EW/kQ7eHTqygGOpmWJqnb1DPEkf4hHE5NUGixnVdLxEsgBs/kYtfD8iW5VetQ/AM" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/gh/emp-code/aem-client@a93b0a98877a8c5ada254cbe3fcd34b0bf8177df/modern/main.js" integrity="sha384-czKJbqjLJZingeA2kk6h7FjGKNYgQkYBcHGpRHqwpDkDtWULdyOoS515Qp/1QTi3" crossorigin="anonymous"></script>
 	</body>
 </html>
